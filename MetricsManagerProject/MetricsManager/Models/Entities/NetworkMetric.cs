@@ -2,7 +2,7 @@
 
 namespace MetricsManager.Models.Entities
 {
-    public class NetworkMetric : Entity<uint>
+    public class NetworkMetric : Entity<int>
     {
         public int BytesPerSec { get; set; }
 

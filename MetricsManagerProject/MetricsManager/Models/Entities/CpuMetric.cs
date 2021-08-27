@@ -2,7 +2,7 @@
 
 namespace MetricsManager.Models.Entities
 {
-    public class CpuMetric : Entity<uint>
+    public class CpuMetric : Entity<int>
     {
         public int ProcessorTimeTotal { get; set; }
 

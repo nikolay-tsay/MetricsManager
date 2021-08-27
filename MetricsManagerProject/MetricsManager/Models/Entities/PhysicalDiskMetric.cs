@@ -2,7 +2,7 @@
 
 namespace MetricsManager.Models.Entities
 {
-    public class PhysicalDiskMetric : Entity<uint>
+    public class PhysicalDiskMetric : Entity<int>
     {
         public int IdleTimeTotal { get; set; }
 

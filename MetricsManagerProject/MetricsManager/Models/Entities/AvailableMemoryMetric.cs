@@ -2,7 +2,7 @@
 
 namespace MetricsManager.Models.Entities
 {
-    public class AvailableMemoryMetric : Entity<uint>
+    public class AvailableMemoryMetric : Entity<int>
     {
         public int AvailableMBytes { get; set; }
 
