@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MetricsManager.DAL.Repositories.Interfaces;
 using MetricsManager.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace MetricsManager.DAL.Repositories
 {
@@ -25,5 +27,6 @@ namespace MetricsManager.DAL.Repositories
             _db.NetworkMetrics.Add(obj);
             await _db.SaveChangesAsync();
         }
+        
     }
 }

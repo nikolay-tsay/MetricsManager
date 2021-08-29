@@ -6,6 +6,6 @@ namespace MetricsManager.Models.Entities
     {
         public int ProcessorTimeTotal { get; set; }
 
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

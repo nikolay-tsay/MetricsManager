@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MetricsManager.DAL.Repositories.Interfaces;
+using MetricsManager.DAL.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsManager.Controllers
 {
@@ -6,11 +8,18 @@ namespace MetricsManager.Controllers
     [Route("api/cpumetrics")]
     public class CpuMetricsController : Controller
     {
+        private ICpuMetricService _service;
+
+        public CpuMetricsController(ICpuMetricService service)
+        {
+            _service = service;
+        }
+        
         [HttpGet]
         [Route("read")]
         public IActionResult GetAllMetrics()
         {
-            return Ok();
+            return Ok(_service.GetAll());
         }
     }
 }

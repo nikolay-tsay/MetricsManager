@@ -6,6 +6,6 @@ namespace MetricsManager.Models.Entities
     {
         public int IdleTimeTotal { get; set; }
 
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

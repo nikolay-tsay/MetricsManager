@@ -1,18 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using MetricsManager.DAL;
+using MetricsManager.DAL.Repositories;
+using MetricsManager.DAL.Repositories.Interfaces;
+using MetricsManager.DAL.Services;
+using MetricsManager.DAL.Services.Interfaces;
+using MetricsManager.DTO;
+using MetricsManager.Jobs;
+using MetricsManager.Jobs.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsManager
 {
@@ -28,9 +33,51 @@ namespace MetricsManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICpuMetricRepository, CpuMetricRepository>();
+            services.AddScoped<IMemoryRepository, MemoryMetricRepository>();
+            services.AddScoped<IDiskMetricRepository, DiskMetricRepository>();
+            services.AddScoped<INetworkMetricRepository, NetworkMetricRepository>();
+
+            services.AddScoped<ICpuMetricService, CpuMetricService>();
+
+            services.AddSingleton<IJobFactory, ScopedJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            
+            services.AddSingleton<QuartzJobRunner>();
+            services.AddHostedService<QuartzHostedService>();
+
+            services.AddScoped<CpuMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(CpuMetricJob),
+                cronExpression: "0/5 * * * * ?"));
+            
+            services.AddScoped<MemoryMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(MemoryMetricJob),
+                cronExpression: "0/5 * * * * ?"));
+
+            services.AddScoped<DiskMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(DiskMetricJob),
+                cronExpression: "0/5 * * * * ?"));
+            
+            services.AddScoped<NetworkMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(NetworkMetricJob),
+                cronExpression: "0/5 * * * * ?"));
+    
+            MapperConfiguration mapperConfiguration = new MapperConfiguration(
+                mp => mp.AddProfile(new MapperProfile()));
+            var mapper = mapperConfiguration.CreateMapper();
+            
+            services.AddSingleton(mapper);
+
+            //var connString = Configuration.GetConnectionString("DefaultConnection");
+            //var connection = new SqliteConnection(connString);
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL"));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             
             services.AddControllers();
