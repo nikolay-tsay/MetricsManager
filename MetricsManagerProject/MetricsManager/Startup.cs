@@ -39,6 +39,9 @@ namespace MetricsManager
             services.AddScoped<INetworkMetricRepository, NetworkMetricRepository>();
 
             services.AddScoped<ICpuMetricService, CpuMetricService>();
+            services.AddScoped<IMemoryMetricService, MemoryMetricService>();
+            services.AddScoped<IDiskMetricService, DiskMetricService>();
+            services.AddScoped<INetworkMetricService, NetworkMetricService>();
 
             services.AddSingleton<IJobFactory, ScopedJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();

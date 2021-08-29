@@ -8,7 +8,7 @@ namespace MetricsManager.Controllers
     [Route("api/cpumetrics")]
     public class CpuMetricsController : Controller
     {
-        private ICpuMetricService _service;
+        private readonly ICpuMetricService _service;
 
         public CpuMetricsController(ICpuMetricService service)
         {

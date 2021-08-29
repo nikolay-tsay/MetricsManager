@@ -8,26 +8,26 @@ using MetricsManager.Models.Entities;
 
 namespace MetricsManager.DAL.Services
 {
-    internal sealed class CpuMetricService : ICpuMetricService
+    internal sealed class DiskMetricService : IDiskMetricService
     {
-        private readonly ICpuMetricRepository _repository;
+        private readonly IDiskMetricRepository _repository;
         private readonly IMapper _mapper;
 
-        public CpuMetricService(ICpuMetricRepository repository, IMapper mapper)
+        public DiskMetricService(IDiskMetricRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
         
-        public async Task<IList<CpuMetricDto>> GetAll()
+        public async Task<IList<DiskMetricDto>> GetAll()
         {
-            IList<CpuMetric> sourceList = await _repository.GetAll();
+            IList<PhysicalDiskMetric> sourceList = await _repository.GetAll();
 
-            IList<CpuMetricDto> output = new List<CpuMetricDto>();
-            
+            IList<DiskMetricDto> output = new List<DiskMetricDto>();
+
             foreach (var metric in sourceList)
             {
-                output.Add(_mapper.Map<CpuMetricDto>(metric));
+                output.Add(_mapper.Map<DiskMetricDto>(metric));
             }
 
             return output;
