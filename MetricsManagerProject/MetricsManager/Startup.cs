@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using Serilog;
 
 namespace MetricsManager
 {
@@ -68,16 +69,12 @@ namespace MetricsManager
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(NetworkMetricJob),
                 cronExpression: "0/5 * * * * ?"));
-    
+            
             MapperConfiguration mapperConfiguration = new MapperConfiguration(
                 mp => mp.AddProfile(new MapperProfile()));
             var mapper = mapperConfiguration.CreateMapper();
-            
             services.AddSingleton(mapper);
-
-            //var connString = Configuration.GetConnectionString("DefaultConnection");
-            //var connection = new SqliteConnection(connString);
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
@@ -101,6 +98,8 @@ namespace MetricsManager
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

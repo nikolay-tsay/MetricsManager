@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MetricsManager.DAL.Repositories.Interfaces;
 using MetricsManager.DAL.Services.Interfaces;
 using MetricsManager.DTO;
 using MetricsManager.Models.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace MetricsManager.DAL.Services
 {
@@ -13,15 +13,19 @@ namespace MetricsManager.DAL.Services
     {
         private readonly INetworkMetricRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<NetworkMetricService> _logger;
 
-        public NetworkMetricService(INetworkMetricRepository repository, IMapper mapper)
+        public NetworkMetricService(INetworkMetricRepository repository, IMapper mapper, ILogger<NetworkMetricService> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
         
         public async Task<IList<NetworkMetricDto>> GetAll()
         {
+            _logger.LogInformation("Get method called from NetworkMetricService");
+            
             IList<NetworkMetric> sourceList = await _repository.GetAll();
             
             IList<NetworkMetricDto> output = new List<NetworkMetricDto>();

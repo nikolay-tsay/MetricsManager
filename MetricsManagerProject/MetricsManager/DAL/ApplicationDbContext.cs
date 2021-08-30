@@ -1,6 +1,4 @@
-﻿
-
-using MetricsManager.Models.Entities;
+﻿using MetricsManager.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MetricsManager.DAL

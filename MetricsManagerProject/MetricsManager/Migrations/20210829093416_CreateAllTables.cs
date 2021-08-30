@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MetricsManager.Migrations
@@ -20,7 +21,7 @@ namespace MetricsManager.Migrations
                 {
                     table.PrimaryKey("PK_CpuMetrics", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "DiskMetrics",
                 columns: table => new
@@ -34,7 +35,7 @@ namespace MetricsManager.Migrations
                 {
                     table.PrimaryKey("PK_DiskMetrics", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "MemoryMetrics",
                 columns: table => new
@@ -48,7 +49,7 @@ namespace MetricsManager.Migrations
                 {
                     table.PrimaryKey("PK_MemoryMetrics", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "NetworkMetrics",
                 columns: table => new

@@ -5,6 +5,7 @@ using MetricsManager.DAL.Repositories.Interfaces;
 using MetricsManager.DAL.Services.Interfaces;
 using MetricsManager.DTO;
 using MetricsManager.Models.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace MetricsManager.DAL.Services
 {
@@ -12,15 +13,19 @@ namespace MetricsManager.DAL.Services
     {
         private readonly ICpuMetricRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<CpuMetricService> _logger;
 
-        public CpuMetricService(ICpuMetricRepository repository, IMapper mapper)
+        public CpuMetricService(ICpuMetricRepository repository, IMapper mapper, ILogger<CpuMetricService> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
         
         public async Task<IList<CpuMetricDto>> GetAll()
         {
+            _logger.LogInformation("Get method called from CpuMetricService");
+            
             IList<CpuMetric> sourceList = await _repository.GetAll();
 
             IList<CpuMetricDto> output = new List<CpuMetricDto>();
