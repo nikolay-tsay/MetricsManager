@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MetricsManager.Controllers;
 using MetricsManager.DAL.Repositories.Interfaces;
 using MetricsManager.Models.Entities;
 using Microsoft.EntityFrameworkCore;

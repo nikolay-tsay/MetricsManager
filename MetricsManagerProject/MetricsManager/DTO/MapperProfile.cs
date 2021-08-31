@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MetricsManager.Jobs;
 using MetricsManager.Models.Entities;
 
 namespace MetricsManager.DTO

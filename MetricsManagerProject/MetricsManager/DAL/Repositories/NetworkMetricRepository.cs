@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MetricsManager.DAL.Repositories.Interfaces;
 using MetricsManager.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Z.EntityFramework.Plus;
 
 namespace MetricsManager.DAL.Repositories
 {
