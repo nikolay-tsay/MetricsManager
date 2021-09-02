@@ -87,8 +87,17 @@ namespace MetricsManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
+            //Clear all tables on startup
+            context.CpuMetrics.RemoveRange(context.CpuMetrics);
+            context.MemoryMetrics.RemoveRange(context.MemoryMetrics);
+            context.DiskMetrics.RemoveRange(context.DiskMetrics);
+            context.NetworkMetrics.RemoveRange(context.NetworkMetrics);
+            context.SaveChanges();
+            
+            context.Database.EnsureCreated();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
